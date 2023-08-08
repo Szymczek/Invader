@@ -32,6 +32,7 @@ export default class Enemy {
             if (this.game.player.lives > 0) this.game.player.lives--;
             if (this.game.player.lives < 1) {
                 this.game.gameOver = true;
+                this.game.waves = [];
                 this.game.player.speed = 0;
                 this.game.projectilesPool = [];
                 this.game.numberOfProjectiles = 0;
