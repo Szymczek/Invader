@@ -28,6 +28,7 @@ class Enemy {
         this.y = 0;
         this.positionX = positionX;
         this.positionY = positionY;
+        this.markedForDelitation = false;
     }
     draw(context) {
         context.strokeRect(this.x, this.y, this.width, this.height);
@@ -35,9 +36,17 @@ class Enemy {
     update(x, y){
         this.x = x + this.positionX;
         this.y = y + this.positionY;
+        // Check Collision Enemies
+        this.game.projectilesPool.forEach( projectile => {
+             if ( !projectile.free && this.game.checkCollision(this, projectile)) {
+                this.markedForDelitation = true
+                projectile.reset(); 
+             }
+        })
     }
 
 }
+
 
 class Wave {
     constructor(game){
@@ -65,6 +74,8 @@ class Wave {
             enemy.update(this.x, this.y);
             enemy.draw(context);
         })
+
+        this.enemies = this.enemies.filter( object => !object.markedForDelitation); 
     }
 
     create(){
@@ -77,6 +88,7 @@ class Wave {
         }
     }    
 }
+
 
 class Projectile {
     constructor() {
@@ -180,6 +192,17 @@ class Game {
             if (this.projectilesPool[i].free) return this.projectilesPool[i];
         }
     }
+
+    // Collisions 
+    checkCollision(a, b) {
+        return (
+            a.x < b.x + b.width &&
+            a.x + a.width > b.x &&
+            a.y < b.y + b.height &&
+            a.y + a.height > b.y 
+            )
+    }
+
 }
 
 
