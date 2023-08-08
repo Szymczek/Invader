@@ -6,7 +6,8 @@ window.addEventListener('load', function(){
     canvas.width = 600;
     canvas.height = 500;
     ctx.fillStyle = 'grey';
-    ctx.lineWidth = 5
+    ctx.lineWidth = 5;
+    ctx.font = '20px Arial'
     const game = new Game(canvas);
     function animate(){
         ctx.clearRect(0,0, canvas.width, canvas.height);

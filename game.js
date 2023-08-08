@@ -17,7 +17,7 @@ export default class Game {
         this.projectilesPool = [];
         this.numberOfProjectiles = 10;
         this.createProjectiles();
-
+        this.gunFired = false;
 
         // Enemys 
         this.columns = 1;
@@ -48,13 +48,20 @@ export default class Game {
                 player.y -= player.speed;
             } else if (keyPressed.key == 's' && canMoveDown) {
                 player.y += player.speed;
-            } else if (keyPressed.key == 'r') {
+            } else if (keyPressed.key == 'r' && this.gameOver) {
                 this.restart()
             } 
 
             // Actions
-            if (keyPressed.key == ' ') {
+            if (keyPressed.key == ' ' && !this.gunFired) {
                 player.shoot();
+                this.gunFired = true;
+            }
+        });
+
+        window.addEventListener('keyup', keyPressed => {
+            if (keyPressed.key == ' ' && this.gunFired) {
+                this.gunFired = false;
             }
         });
  
